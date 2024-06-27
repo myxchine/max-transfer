@@ -1,0 +1,16 @@
+notes train
+
+1- blue square rounded
+2- change blue colour to be better
+3- size train image same on all / crop sky
+4- change location pin to tear drop shape, / blue colour must be red / same size
+5- all stop names in white section / font smaller
+6- split maps and schedules? / first stop
+7- font of place smaller
+8- identify maps on the top
+9- 
+10- logos footer
+11- 
+12- 
+13- gps co-ords pref.
+14- 
