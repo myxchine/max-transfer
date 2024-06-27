@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 export default async function Files({ params }: { params: { name: string } }) {
   const data = await getFiles();
   return (
-    <div className="flex flex-col gap-4 p-4 w-screen h-screen justify-center items-center">
+    <div className="flex flex-col gap-4 p-4 w-screen fullScreen justify-center items-center">
       <section className="flex flex-col gap-4 min-w-[300px] justify-center items-center border rounded-lg p-4 shadow bg-black/5 text-black">
         <div className="flex flex-col gap-4 w-[300px]">
           <h1 className="text-md font-bold">Download Files</h1>
