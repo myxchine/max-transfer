@@ -13,6 +13,7 @@ export default function UploadBox({
         multiple
         onChange={onFileChange}
         size={100}
+        required
       />
       <label
         htmlFor="file-upload"

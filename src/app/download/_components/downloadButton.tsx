@@ -1,4 +1,5 @@
 "use client";
+
 import { getSignedUrl } from "@/server/storage/getSignedUrl";
 
 const DownloadButton = ({ fileName }: { fileName: string }) => {
@@ -10,14 +11,15 @@ const DownloadButton = ({ fileName }: { fileName: string }) => {
       // Create a temporary anchor element
       const link = document.createElement("a");
       link.href = signedUrl[0];
-      link.setAttribute("download", fileName); // Set the download attribute to specify filename
+      link.setAttribute("download", ""); // Set the download attribute to specify filename
+      link.style.display = "none"; // Hide the link
 
       // Append the anchor element to the body
       document.body.appendChild(link);
 
       // Trigger the download by simulating a click
+      link.download;
       link.click();
-
       // Clean up: remove the anchor element from the DOM
       document.body.removeChild(link);
     } catch (error) {

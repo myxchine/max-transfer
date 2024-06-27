@@ -28,7 +28,7 @@ const Upload = () => {
       <UploadBox onFileChange={onFileChange} />
       <UploadButton isPending={isPending} />
       <div className="text-sm text-black/50">
-        {status ? <p>{status}</p> : "Hurry up man."}
+        {status ? "Success, redirecting..." : "Hurry up man."}
       </div>
     </form>
   );

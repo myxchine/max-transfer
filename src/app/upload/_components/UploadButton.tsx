@@ -2,7 +2,7 @@ export default function UploadButton({ isPending }: { isPending: boolean }) {
   return (
     <button
       type="submit"
-      className="w-full border border-black rounded-md p-2 bg-black text-white font-semibold flex items-center justify-center h-12"
+      className="w-full border border-black rounded-md p-2 bg-black text-white font-semibold flex items-center justify-center h-12 hover:bg-black/80"
       disabled={isPending}
     >
       {isPending ? <Spinner /> : "Confirm Upload"}
