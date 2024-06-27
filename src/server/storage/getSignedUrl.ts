@@ -8,7 +8,7 @@ export const getSignedUrl = async (fileName: string) => {
   try {
     const data = await bucket.file(fileName).getSignedUrl({
       action: "read",
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      expires: new Date(Date.now() + 1000 * 60 * 15),
     });
 
     return data;

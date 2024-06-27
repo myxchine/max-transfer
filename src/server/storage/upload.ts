@@ -19,7 +19,7 @@ export const uploadFile = async (somestate: any, formData: FormData) => {
     await myBucket.file(file.name).save(Buffer.from(buffer));
     console.log(`${file.name} uploaded successfully`);
 
-    return "File uploaded successfully";
+    return file.name;
   } catch (err) {
     console.log(err);
     return "Error uploading file";

@@ -5,17 +5,22 @@ import { uploadFile } from "@/server/storage/upload";
 import UploadButton from "./UploadButton";
 import UploadBox from "./UploadBox";
 import FileList from "./FileList";
+import { useRouter } from "next/navigation";
 
 const Upload = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [status, upload, isPending] = useActionState(uploadFile, null);
+  const router = useRouter();
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const filesArray = Array.from(event.target.files);
-      setSelectedFiles((prev) => [...prev, ...filesArray]);
+      setSelectedFiles(Array.from(event.target.files));
     }
   };
+
+  if (status) {
+    router.push(`/download/${status}`);
+  }
 
   return (
     <form action={upload} className="flex flex-col gap-4 w-full text-center">
@@ -30,3 +35,16 @@ const Upload = () => {
 };
 
 export default Upload;
+
+/*
+
+for multiples files
+
+const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  if (event.target.files) {
+    const filesArray = Array.from(event.target.files);
+    setSelectedFiles((prev) => [...prev, ...filesArray]);
+  }
+};
+
+*/
