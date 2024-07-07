@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useRef } from "react";
 import { uploadFile } from "@/server/storage/upload";
 import UploadButton from "./UploadButton";
 import UploadBox from "./UploadBox";
@@ -11,10 +11,22 @@ const Upload = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [status, upload, isPending] = useActionState(uploadFile, null);
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      setSelectedFiles(Array.from(event.target.files));
+      const filesArray = Array.from(event.target.files);
+      setSelectedFiles((prev) => [...prev, ...filesArray]);
+
+      if (inputRef.current) {
+        const dataTransfer = new DataTransfer();
+        [...selectedFiles, ...filesArray].forEach((file) => {
+          dataTransfer.items.add(file);
+        });
+        inputRef.current.files = dataTransfer.files;
+      }
+
+      console.log(inputRef.current?.files || "No files");
     }
   };
 
@@ -25,7 +37,7 @@ const Upload = () => {
   return (
     <form action={upload} className="flex flex-col gap-4 w-full text-center">
       <FileList files={selectedFiles} />
-      <UploadBox onFileChange={onFileChange} />
+      <UploadBox onFileChange={onFileChange} inputRef={inputRef} />
       <UploadButton isPending={isPending} />
       <div className="text-sm text-black/50">
         {status ? "Success, redirecting..." : "Hurry up man."}
@@ -35,16 +47,3 @@ const Upload = () => {
 };
 
 export default Upload;
-
-/*
-
-for multiples files
-
-const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  if (event.target.files) {
-    const filesArray = Array.from(event.target.files);
-    setSelectedFiles((prev) => [...prev, ...filesArray]);
-  }
-};
-
-*/

@@ -1,25 +1,36 @@
 "use server";
 
 import { storage } from ".";
+import { v4 as uuidv4 } from "uuid";
 
 export const uploadFile = async (somestate: any, formData: FormData) => {
-  const file = formData.get("file-upload") as File;
-  if (!file) {
-    return "No file selected";
+  const files = formData.getAll("file-upload") as File[];
+
+  if (files.length === 0) {
+    return "No files selected";
   }
 
-  if (file.size < 1) {
-    return "File is empty";
-  }
+  console.log(files);
 
   const myBucket = storage.bucket("duality-uploads");
-
+  const folderName = uuidv4();
   try {
-    const buffer = await file.arrayBuffer();
-    await myBucket.file(file.name).save(Buffer.from(buffer));
-    console.log(`${file.name} uploaded successfully`);
+    for (const file of files) {
+      if (file.size < 1) {
+        console.log(`File ${file.name} is empty`);
+        continue;
+      }
 
-    return file.name;
+      console.log(file);
+
+      const buffer = await file.arrayBuffer();
+
+      const filePath = `${folderName}/${file.name}`;
+      await myBucket.file(filePath).save(Buffer.from(buffer));
+      console.log(`${file.name} uploaded successfully to ${filePath}`);
+    }
+
+    return folderName;
   } catch (err) {
     console.log(err);
     return "Error uploading file";
